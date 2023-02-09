@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     let optionEqual: Button = Button(type: OperatorButton.equals)
     let optionClear: Button = Button(type: FunctionalButton.clear)
     let optionRemainder: Button = Button(type: FunctionalButton.empty)
-    let optionMinus: Button = Button(type: FunctionalButton.empty)
+    let optionMinus: Button = Button(type: FunctionalButton.minus)
     
     let calculatorView: UIView = UIView().then {
         $0.backgroundColor = .clear

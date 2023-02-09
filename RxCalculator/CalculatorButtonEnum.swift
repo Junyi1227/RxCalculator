@@ -17,6 +17,7 @@ enum FunctionalButton: CalculatorButton {
     case clear
     case empty
     case dot
+    case minus
     
     func text() -> String {
         switch self {
@@ -26,6 +27,8 @@ enum FunctionalButton: CalculatorButton {
             return ""
         case .dot:
             return "."
+        case .minus:
+            return "+/-"
         }
     }
 }

@@ -16,11 +16,10 @@ protocol ViewModelType {
 }
 class ViewModel {
     private var relay = BehaviorRelay<String>(value: "")
-    private var lastLabel: String = ""
-    private var lastNumber: NSNumber = 0
     private var lastOperator: OperatorButton? = nil
-    private var currentNumber: NSNumber = 0
-
+    private var lastNumber: NSNumber = 0 //按下optionalButton後的值
+    private var currentNumber: NSNumber = 0 //按下optionalButton前的值
+    private var lastLabel: String = "" //呈現在畫面上的字串
 }
 
 extension ViewModel: ViewModelType {
@@ -53,6 +52,9 @@ extension ViewModel: ViewModelType {
                     case .dot:
                         self.inputDot()
                         break
+                    case .minus:
+                        self.inputMinus()
+                        break
                     }
                     break
                 default:
@@ -69,7 +71,8 @@ extension ViewModel: ViewModelType {
 extension ViewModel {
     private func inputNum(num: String) {
         let dot = self.lastLabel.hasSuffix(".") ? "." : ""
-        self.currentNumber = NSNumber(value: Double("\(self.currentNumber)" + dot + num) ?? 0)
+        self.currentNumber = NSDecimalNumber(value: Double("\(self.currentNumber)" + dot + num) ?? 0)
+        //TODO: 0.01會誤判
         self.lastLabel = "\(self.currentNumber)"
     }
     
@@ -78,7 +81,10 @@ extension ViewModel {
             self.lastLabel = self.lastLabel + "."
         }
     }
-    
+    private func inputMinus() {
+        self.currentNumber = NSDecimalNumber(value: self.currentNumber.doubleValue * -1)
+        self.lastLabel = "\(self.currentNumber)"
+    }
     private func inputClear() {
         self.currentNumber = 0
         self.lastNumber = 0
