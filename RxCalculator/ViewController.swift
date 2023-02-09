@@ -95,7 +95,7 @@ class ViewController: UIViewController {
                 view.snp.makeConstraints { make in
                     if view == button0 {
                         make.height.equalTo(buttonHeight)
-                        make.width.equalTo(buttonHeight*2 + padding)
+                        make.width.equalTo(buttonHeight * 2 + padding)
                     }else{
                         make.height.width.equalTo(buttonHeight)
                     }

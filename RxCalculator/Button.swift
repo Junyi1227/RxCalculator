@@ -16,12 +16,11 @@ enum CustomButtonType {
 
 class Button: UIButton {
     var type: CustomButtonType = .num
-    var height = 80
-    init(type: CustomButtonType, height: Int = 80) {
+
+    init(type: CustomButtonType) {
         super.init(frame: .zero)
 
         self.type = type
-        self.height = 80
         setupUI()
     }
     
@@ -35,6 +34,12 @@ class Button: UIButton {
         case .optional: self.backgroundColor = .orange
         case .extraOption: self.backgroundColor = .darkGray
         }
-        self.layer.cornerRadius = CGFloat(height/2)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = layer.frame.height / 2
+        tintColor = UIColor.white
+        setTitleColor(UIColor.white, for: .normal)
     }
 }
