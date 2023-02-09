@@ -18,6 +18,7 @@
 		71CF84132993A6E400A32F47 /* RxCalculatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CF84122993A6E400A32F47 /* RxCalculatorUITests.swift */; };
 		71CF84152993A6E400A32F47 /* RxCalculatorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CF84142993A6E400A32F47 /* RxCalculatorUITestsLaunchTests.swift */; };
 		71CF84222993A7CF00A32F47 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 71CF84212993A7CF00A32F47 /* .gitignore */; };
+		71CF842429948B1000A32F47 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CF842329948B1000A32F47 /* Button.swift */; };
 		7BDCA4277E19FED9382BB15A /* Pods_RxCalculator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BE7AA85296911BC47B7B38 /* Pods_RxCalculator.framework */; };
 		F531A01DC083627D1AE6E4C5 /* Pods_RxCalculator_RxCalculatorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD029131F527777F2BC4E5E5 /* Pods_RxCalculator_RxCalculatorUITests.framework */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		71CF84122993A6E400A32F47 /* RxCalculatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCalculatorUITests.swift; sourceTree = "<group>"; };
 		71CF84142993A6E400A32F47 /* RxCalculatorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCalculatorUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		71CF84212993A7CF00A32F47 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		71CF842329948B1000A32F47 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		82AE3A895928B1EA1C769397 /* Pods-RxCalculatorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxCalculatorTests.debug.xcconfig"; path = "Target Support Files/Pods-RxCalculatorTests/Pods-RxCalculatorTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9429F823D58BD47B78D2E57F /* Pods-RxCalculator-RxCalculatorUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxCalculator-RxCalculatorUITests.debug.xcconfig"; path = "Target Support Files/Pods-RxCalculator-RxCalculatorUITests/Pods-RxCalculator-RxCalculatorUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		972464123B650F4BC6001B29 /* Pods-RxCalculatorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxCalculatorTests.release.xcconfig"; path = "Target Support Files/Pods-RxCalculatorTests/Pods-RxCalculatorTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				71CF83F12993A6E200A32F47 /* AppDelegate.swift */,
 				71CF83F32993A6E200A32F47 /* SceneDelegate.swift */,
 				71CF83F52993A6E200A32F47 /* ViewController.swift */,
+				71CF842329948B1000A32F47 /* Button.swift */,
 				71CF83F72993A6E200A32F47 /* Main.storyboard */,
 				71CF83FA2993A6E300A32F47 /* Assets.xcassets */,
 				71CF83FC2993A6E300A32F47 /* LaunchScreen.storyboard */,
@@ -413,6 +416,7 @@
 				71CF83F62993A6E200A32F47 /* ViewController.swift in Sources */,
 				71CF83F22993A6E200A32F47 /* AppDelegate.swift in Sources */,
 				71CF83F42993A6E200A32F47 /* SceneDelegate.swift in Sources */,
+				71CF842429948B1000A32F47 /* Button.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
