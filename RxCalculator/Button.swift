@@ -7,17 +7,13 @@
 
 import Foundation
 import UIKit
-
-enum CustomButtonType {
-    case optional
-    case num
-    case extraOption
-}
+import RxSwift
+import RxCocoa
 
 class Button: UIButton {
-    var type: CustomButtonType = .num
+    var type: CalculatorButton?
 
-    init(type: CustomButtonType) {
+    init(type: CalculatorButton) {
         super.init(frame: .zero)
 
         self.type = type
@@ -29,10 +25,14 @@ class Button: UIButton {
     }
     
     func setupUI() {
-        switch self.type {
-        case .num: self.backgroundColor = .lightGray
-        case .optional: self.backgroundColor = .orange
-        case .extraOption: self.backgroundColor = .darkGray
+        self.setTitle(type!.text(), for: .normal)
+
+        if self.type is FunctionalButton {
+            self.backgroundColor = .darkGray
+        }else if self.type is NumberButton {
+            self.backgroundColor = .lightGray
+        }else if self.type is OperatorButton {
+            self.backgroundColor = .orange
         }
     }
     

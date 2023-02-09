@@ -8,80 +8,75 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
 
 class ViewController: UIViewController {
-    let button0: Button = Button(type: .num).then {
-        $0.setTitle("0", for: .normal)
-    }
-    let button1: Button = Button(type: .num).then {
-        $0.setTitle("1", for: .normal)
-    }
-    let button2: Button = Button(type: .num).then {
-        $0.setTitle("2", for: .normal)
-    }
-    let button3: Button = Button(type: .num).then {
-        $0.setTitle("3", for: .normal)
-    }
-    let button4: Button = Button(type: .num).then {
-        $0.setTitle("4", for: .normal)
-    }
-    let button5: Button = Button(type: .num).then {
-        $0.setTitle("5", for: .normal)
-    }
-    let button6: Button = Button(type: .num).then {
-        $0.setTitle("6", for: .normal)
-    }
-    let button7: Button = Button(type: .num).then {
-        $0.setTitle("7", for: .normal)
-    }
-    let button8: Button = Button(type: .num).then {
-        $0.setTitle("8", for: .normal)
-    }
-    let button9: Button = Button(type: .num).then {
-        $0.setTitle("9", for: .normal)
-    }
-    let buttonDot: Button = Button(type: .num).then {
-        $0.setTitle(".", for: .normal)
-    }
+    let button0: Button = Button(type: NumberButton.zero)
+    let button1: Button = Button(type: NumberButton.one)
+    let button2: Button = Button(type: NumberButton.two)
+    let button3: Button = Button(type: NumberButton.three)
+    let button4: Button = Button(type: NumberButton.four)
+    let button5: Button = Button(type: NumberButton.five)
+    let button6: Button = Button(type: NumberButton.six)
+    let button7: Button = Button(type: NumberButton.seven)
+    let button8: Button = Button(type: NumberButton.eight)
+    let button9: Button = Button(type: NumberButton.nine)
+    let buttonDot: Button = Button(type: FunctionalButton.dot)
     
-    let optionPlus: Button = Button(type: .optional).then {
-        $0.setTitle("+", for: .normal)
-    }
-    let optionSubtract: Button = Button(type: .optional).then {
-        $0.setTitle("-", for: .normal)
-    }
-    let optionMultiply: Button = Button(type: .optional).then {
-        $0.setTitle("*", for: .normal)
-    }
-    let optionDivision: Button = Button(type: .optional).then {
-        $0.setTitle("/", for: .normal)
-    }
-    let optionEqual: Button = Button(type: .optional).then {
-        $0.setTitle("=", for: .normal)
-    }
-    let optionClear: Button = Button(type: .extraOption).then {
-        $0.setTitle("C", for: .normal)
-    }
-    let optionRemainder: Button = Button(type: .extraOption).then {
-        $0.setTitle("%", for: .normal)
-    }
-    let optionMinus: Button = Button(type: .extraOption).then {
-        $0.setTitle("+/-", for: .normal)
-    }
-
+    let optionPlus: Button = Button(type: OperatorButton.plus)
+    let optionSubtract: Button = Button(type: OperatorButton.subtract)
+    let optionMultiply: Button = Button(type: OperatorButton.multiply)
+    let optionDivision: Button = Button(type: OperatorButton.divide)
+    let optionEqual: Button = Button(type: OperatorButton.equals)
+    let optionClear: Button = Button(type: FunctionalButton.clear)
+    let optionRemainder: Button = Button(type: FunctionalButton.empty)
+    let optionMinus: Button = Button(type: FunctionalButton.empty)
+    
     let calculatorView: UIView = UIView().then {
         $0.backgroundColor = .clear
     }
     
+    let numberLabel: UILabel = UILabel().then {
+        $0.textColor = .white
+        $0.textAlignment = .right
+        $0.font = .systemFont(ofSize: 64)
+    }
+    
+    let vm = ViewModel()
+    let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .brown
         setupUI()
+        bind()
     }
     
+    private func bind() {
+        let taps = calculatorView.subviews.map { view -> Observable<CalculatorButton> in
+            let button = view as! Button
+            return button.rx.tap.map{button.type!}.asObservable()
+        }
+                
+        let input = ViewModel.Input(numButtonClick: Observable.merge(taps))
+        let output = vm.transform(input: input)
+        
+        output.text.subscribe(onNext: { str in
+            self.numberLabel.text = str
+
+        })
+        .disposed(by: disposeBag)
+
+    }
     private func setupUI() {
+        self.view.addSubview(numberLabel)
         self.view.addSubview(calculatorView)
+        numberLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(self.calculatorView.snp.top).offset(-16)
+            make.right.equalTo(self.calculatorView.snp.right)
+            make.left.equalTo(self.calculatorView.snp.left)
+        }
+        
         let views = [[optionClear,optionMinus,optionRemainder,optionDivision],
                      [button7,button8,button9,optionMultiply],
                      [button4,button5,button6,optionSubtract],
@@ -119,7 +114,7 @@ class ViewController: UIViewController {
                 }
             }
         }
-//        calculatorView.backgroundColor = .purple
+
         calculatorView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-32)
