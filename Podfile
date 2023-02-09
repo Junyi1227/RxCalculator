@@ -11,6 +11,9 @@ target 'RxCalculator' do
   pod 'SnapKit'
   pod 'Then'
 
+  #UnitTest
+  pod 'RxTest'
+  pod 'RxBlocking'
   target 'RxCalculatorTests' do
     inherit! :search_paths
     # Pods for testing

@@ -15,7 +15,6 @@ protocol ViewModelType {
     func transform(input: Input) -> Output
 }
 class ViewModel {
-    private var relay = BehaviorRelay<String>(value: "")
     private var lastOperator: OperatorButton? = nil
     private var lastNumber: NSNumber = 0 //按下optionalButton後的值
     private var currentNumber: NSNumber = 0 //按下optionalButton前的值

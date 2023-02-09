@@ -6,24 +6,39 @@
 //
 
 import XCTest
-@testable import RxCalculator
+import RxSwift
+import RxTest
 
+@testable import RxCalculator
 class RxCalculatorTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    func testTenAddOne() throws {
+        //模擬label
+        let observer = scheduler.createObserver(String.self)
+               
+        //模擬button
+        let click:TestableObservable<CalculatorButton> = scheduler.createColdObservable([
+            .next(100, NumberButton.one) ,
+            .next(100, NumberButton.zero) ,
+            .next(100, OperatorButton.plus),
+            .next(100, NumberButton.one),
+            .next(100, OperatorButton.equals)
+        ])
+            
+        let input = ViewModel.Input(numButtonClick: click.asObservable())
+        let output = viewModel.transform(input: input)
+        output.text.bind(to: observer).disposed(by: self.disposeBag)
+        scheduler.start()
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        XCTAssertEqual(observer.events, [.next(0, "0"),
+                                         .next(100, "1"),
+                                         .next(100, "10"),
+                                         .next(100, "10"),
+                                         .next(100, "1"),
+                                         .next(100, "11")])
+
+        
     }
 
     func testPerformanceExample() throws {
@@ -33,4 +48,21 @@ class RxCalculatorTests: XCTestCase {
         }
     }
 
+    
+    var viewModel : ViewModel!
+    var disposeBag: DisposeBag!
+    var scheduler: TestScheduler!
+
+    override func setUpWithError() throws {
+        viewModel = ViewModel()
+        disposeBag = DisposeBag()
+        scheduler = TestScheduler(initialClock: 0)
+    }
+
+    override func tearDownWithError() throws {
+        viewModel = nil
+        disposeBag = nil
+        scheduler = nil
+        super.tearDown()
+    }
 }
