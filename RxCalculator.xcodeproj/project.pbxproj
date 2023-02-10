@@ -117,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				71CF84212993A7CF00A32F47 /* .gitignore */,
+				71CF84292994ECE400A32F47 /* README.md */,
 				71CF83F02993A6E200A32F47 /* RxCalculator */,
 				71CF84072993A6E400A32F47 /* RxCalculatorTests */,
 				71CF84112993A6E400A32F47 /* RxCalculatorUITests */,
@@ -143,7 +144,6 @@
 				71CF83F32993A6E200A32F47 /* SceneDelegate.swift */,
 				71CF83F52993A6E200A32F47 /* ViewController.swift */,
 				71CF842529949C3800A32F47 /* ViewModel.swift */,
-				71CF84292994ECE400A32F47 /* README.md */,
 				71CF84272994DE6E00A32F47 /* CalculatorButtonEnum.swift */,
 				71CF842329948B1000A32F47 /* Button.swift */,
 				71CF83F72993A6E200A32F47 /* Main.storyboard */,
