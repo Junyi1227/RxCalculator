@@ -11,8 +11,6 @@ import RxTest
 
 @testable import RxCalculator
 class RxCalculatorTests: XCTestCase {
-
-
     func testTenAddOne() throws {
         //模擬label
         let observer = scheduler.createObserver(String.self)
@@ -48,7 +46,6 @@ class RxCalculatorTests: XCTestCase {
         }
     }
 
-    
     var viewModel : ViewModel!
     var disposeBag: DisposeBag!
     var scheduler: TestScheduler!

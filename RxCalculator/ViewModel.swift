@@ -15,10 +15,10 @@ protocol ViewModelType {
     func transform(input: Input) -> Output
 }
 class ViewModel {
-    private var lastOperator: OperatorButton? = nil
-    private var lastNumber: NSNumber = 0 //按下optionalButton後的值
-    private var currentNumber: NSNumber = 0 //按下optionalButton前的值
-    private var lastLabel: String = "" //呈現在畫面上的字串
+    private var lastOperator: BehaviorRelay<OperatorButton?> = BehaviorRelay(value: nil)
+    private var lastNumber: BehaviorRelay<NSNumber> = BehaviorRelay(value: 0)
+    private var currentNumber: BehaviorRelay<NSNumber> = BehaviorRelay(value: 0)
+    private var lastLabel: BehaviorRelay<String> = BehaviorRelay(value: "")
 }
 
 extension ViewModel: ViewModelType {
@@ -59,7 +59,7 @@ extension ViewModel: ViewModelType {
                 default:
                     break
                 }
-                return self.lastLabel
+                return self.lastLabel.value
             }
             .startWith("0")
             
@@ -69,39 +69,39 @@ extension ViewModel: ViewModelType {
 
 extension ViewModel {
     private func inputNum(num: String) {
-        let dot = self.lastLabel.hasSuffix(".") ? "." : ""
-        self.currentNumber = NSDecimalNumber(value: Double("\(self.currentNumber)" + dot + num) ?? 0)
+        let dot = self.lastLabel.value.hasSuffix(".") ? "." : ""
+        self.currentNumber.accept(NSDecimalNumber(value: Double("\(self.currentNumber.value)" + dot + num) ?? 0))
         //TODO: 0.01會誤判
-        self.lastLabel = "\(self.currentNumber)"
+        self.lastLabel.accept("\(self.currentNumber.value)")
     }
     
     private func inputDot() {
-        if (!self.lastLabel.contains(".")) {
-            self.lastLabel = self.lastLabel + "."
+        if (!self.lastLabel.value.contains(".")) {
+            self.lastLabel.accept(self.lastLabel.value + ".")
         }
     }
     private func inputMinus() {
-        self.currentNumber = NSDecimalNumber(value: self.currentNumber.doubleValue * -1)
-        self.lastLabel = "\(self.currentNumber)"
+        self.currentNumber.accept(NSDecimalNumber(value: self.currentNumber.value.doubleValue * -1))
+        self.lastLabel.accept("\(self.currentNumber.value)")
     }
     private func inputClear() {
-        self.currentNumber = 0
-        self.lastNumber = 0
-        self.lastOperator = nil
-        self.lastLabel = "\(self.currentNumber)"
+        self.currentNumber.accept(0)
+        self.lastNumber.accept(0)
+        self.lastOperator.accept(nil)
+        self.lastLabel.accept("\(self.currentNumber.value)")
     }
     
     private func inputOperator(_ inputOperator: OperatorButton) {
         let result: NSNumber
-        if let lastOperator = self.lastOperator {
-            result = lastOperator.execute(self.lastNumber, self.currentNumber)
-            self.lastLabel = "\(result)"
+        if let lastOperator = self.lastOperator.value {
+            result = lastOperator.execute(self.lastNumber.value, self.currentNumber.value)
+            self.lastLabel.accept("\(result)")
         }else {
-            result = self.currentNumber
+            result = self.currentNumber.value
         }
         
-        self.lastOperator = inputOperator
-        self.lastNumber = result
-        self.currentNumber = 0
+        self.lastOperator.accept(inputOperator)
+        self.lastNumber.accept(result)
+        self.currentNumber.accept(0)
     }
 }
